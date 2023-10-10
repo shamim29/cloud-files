@@ -11,6 +11,8 @@ class _TeamFolderPageState extends State<TeamFolderPage> {
 
   double availableScreenWidth = 0;
 
+  int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     availableScreenWidth = MediaQuery.of(context).size.width - 50;
@@ -175,13 +177,126 @@ class _TeamFolderPageState extends State<TeamFolderPage> {
                     buildFileColumn('interactive', 'interactive','.prd'),
                   ],
                 ),
+
                 Divider(height: 60,),
+
+                Row(
+                  mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Project",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "Create New",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 20,),
+
+                buildProjectRow('Chatbox'),
+                buildProjectRow('TimeNote'),
+                buildProjectRow('Something'),
+                buildProjectRow('Other'),
               ],
             ),
-          )
+          ),
         ],
       ),
+
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white,
+              spreadRadius: 7,
+              blurRadius: 1,
+            ),
+          ],
+        ),
+        child: FloatingActionButton(
+          onPressed: (){
+          },
+          child: Icon(Icons.add,),
+        ),
+      ),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (index){
+          setState(() {
+            selectedIndex = index;
+          });
+        },
+        currentIndex: selectedIndex,
+
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.access_time),
+            label: 'Time',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_box),
+            label: "Folder",
+          ),
+        ],
+      ),
+
     );
+  }
+
+  Container buildProjectRow(String folderName, ) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 8,),
+                padding: EdgeInsets.symmetric(horizontal: 20,),
+                height: 65,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.folder,
+                          color: Colors.blue[200],
+                        ),
+                        SizedBox(width: 12,),
+                        Text(
+                          folderName,
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                        onPressed: (){},
+                        icon: Icon(
+                          Icons.more_vert_rounded,
+                          color: Colors.grey,
+                        ),
+                    ),
+                  ],
+                ),
+              );
   }
 
   Column buildFileColumn(String image, String filename, String extension) {
